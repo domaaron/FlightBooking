@@ -10,12 +10,13 @@ namespace FlightBooking.models
     [Table("Airplane")]
     public class Airplane
     {
-        public Airplane(string name, Producer producer, int seats)
+        public Airplane(string name, Producer producer, int seats, double maxBaggageWeight)
         {
             Name = name;
             Producer = producer;
             ProducerId = producer.Name;
             Seats = seats;
+            MaxBaggageWeight = maxBaggageWeight;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -27,5 +28,6 @@ namespace FlightBooking.models
         public Producer Producer { get; set; }
         public string ProducerId { get; set; }
         public int Seats { get; set; }
+        public double MaxBaggageWeight { get; set; }
     }
 }
