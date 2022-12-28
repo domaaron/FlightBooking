@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,19 +9,28 @@ using FlightBooking.Application.models;
 
 namespace FlightBooking.models
 {
+    public record Address(string State, string City);
+
+    [Table("Passenger")]
     public class Passenger
     {
-        public Passenger(string firstName, string lastName, string sSN, DateTime birthDate, Address address, string tel, string email)
+        public Passenger(string firstName, string lastName, string ssn, DateTime birthDate, Address address, string tel, string email)
         {
             FirstName = firstName;
             LastName = lastName;
-            SSN = sSN;
+            SSN = ssn;
             BirthDate = birthDate;
             Address = address;
             Tel = tel;
             Email = email;
         }
-        private readonly List<Booking> _bookings => new();
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        protected Passenger() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+        private readonly List<Booking> _bookings = new();
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string SSN { get; set; }
