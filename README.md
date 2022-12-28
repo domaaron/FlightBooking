@@ -1,2 +1,4 @@
 # FlightBooking
-FlightBooking ist eine Datenbank zur Verwaltung von Flugbuchungen. Dabei können Passagiere mehrere Buchungen für verschiedene Flüge erstellt werden. Erstellte Buchungen werden eingereicht und validiert, bevor sie genehmigt werden.
+> FlightBooking is a database for managing flight bookings. It allows passengers to create multiple bookings for different flights. Created bookings are submitted and validated before they are approved.
+>
+>FlightBooking ist eine Datenbank zur Verwaltung von Flugbuchungen. Sie ermöglicht es Passagieren, mehrere Buchungen für verschiedene Flüge zu erstellen. Die erstellten Buchungen werden übermittelt und validiert, bevor sie genehmigt werden.
