@@ -11,7 +11,7 @@ namespace FlightBooking.models
     [Table("Flight")]
     public class Flight
     {
-        public Flight(DateTime departureTime, DateTime arrivalTime, DateTime destinationTime, Airplane airplane, Address departureAddress, Address arrivalAddress)
+        public Flight(DateTime departureTime, DateTime arrivalTime, DateTime destinationTime, Airplane airplane, Address departureAddress, Address arrivalAddress, double price)
         {
             DepartureTime = departureTime;
             ArrivalTime = arrivalTime;
@@ -20,6 +20,7 @@ namespace FlightBooking.models
             AirplaneId = airplane.Id;
             DepartureAddress = departureAddress;
             ArrivalAddress = arrivalAddress;
+            Price = price;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -33,5 +34,6 @@ namespace FlightBooking.models
         public int AirplaneId { get; set; }
         public Address DepartureAddress { get; set; }
         public Address ArrivalAddress { get; set; }
+        public double Price { get; set; }
     }
 }

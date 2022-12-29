@@ -10,10 +10,11 @@ namespace FlightBooking.models
     [Table("Baggage")]
     public class Baggage
     {
-        public Baggage(string name, double weight)
+        public Baggage(string name, double weight, double price)
         {
             Name = name;
             Weight = weight;
+            Price = price;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -23,5 +24,6 @@ namespace FlightBooking.models
         public int Id { get; set; }
         public string Name { get; set; }
         public double Weight { get; set; }
+        public double Price { get; set; }
     }
 }
