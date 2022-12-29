@@ -25,6 +25,7 @@ namespace FlightBooking.models
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         protected Booking() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
         public int Id { get; set; }
         public Passenger Passenger { get; set; }
         public int PassengerId { get; set; }
@@ -34,9 +35,23 @@ namespace FlightBooking.models
         public FlightClass FlightClass { get; set; }
         public IReadOnlyList<Baggage> Baggages => _baggages;
 
-        public void AddBaggage(Baggage b)
+        public void AddBaggage(Booking booking, Baggage baggage)
         {
-            _baggages.Add(b);
+            if (booking != null && baggage != null)
+            {
+                if (baggage.Weight > 0 && baggage.Weight <= booking.Flight.Airplane.MaxBaggageWeight)
+                {
+                    _baggages.Add(baggage);
+                }
+                else
+                {
+                    throw new Exception("Weight of baggage does not meet the requirements");
+                }
+            }
+            else
+            {
+                throw new Exception("No baggage and/or booking was added");
+            }
         }
     }
 }
