@@ -40,9 +40,16 @@ namespace FlightBooking.models
         public string Email { get; set; }
         public IReadOnlyList<Booking> Bookings => _bookings;
 
-        public void AddBooking(Booking b)
+        public void PlaceBooking(Booking b)
         {
-            _bookings.Add(b);
+            if (b != null)
+            {
+                _bookings.Add(b);
+            }
+            else
+            {
+                throw new Exception("No booking was placed");
+            }
         }
     }
 }
