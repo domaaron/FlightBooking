@@ -22,6 +22,13 @@ public class FlightBookingContext : DbContext
     public DbSet<Producer> Producers => Set<Producer>();
     public DbSet<ReviewedHandIn> ReviewedHandIns => Set<ReviewedHandIn>();
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Passenger>().OwnsOne(p => p.Address);
+        modelBuilder.Entity<Flight>().OwnsOne(f1 => f1.ArrivalAddress);
+        modelBuilder.Entity<Flight>().OwnsOne(f2 => f2.DepartureAddress);
+    }
+
     public void Seed()
     {
         Randomizer.Seed = new Random(2145);
