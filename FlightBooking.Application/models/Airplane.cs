@@ -28,6 +28,6 @@ namespace FlightBooking.models
         public Producer Producer { get; set; }
         public string ProducerId { get; set; }
         public int Seats { get; set; }
-        public double MaxBaggageWeight { get; set; }
+        public double MaxBaggageWeight { get; set; }    //Allowed max weight for each individual baggage
     }
 }

@@ -41,7 +41,7 @@ namespace FlightBooking.models
             }
             else
             {
-                throw new Exception("No booking was specified");
+                throw new NullReferenceException();
             }
         }
     }

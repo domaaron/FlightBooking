@@ -14,7 +14,7 @@ namespace FlightBooking.models
         private readonly List<Baggage> _baggages = new();
         public Booking(Passenger passenger, Flight flight, string seatNumber, FlightClass flightClass)
         {
-            Passenger = passenger;
+            Passenger = default!;
             PassengerId = passenger.Id;
             Flight = flight;
             FlightId = flight.Id;
@@ -28,12 +28,12 @@ namespace FlightBooking.models
 
         public int Id { get; set; }
         public Passenger Passenger { get; set; }
-        public int PassengerId { get; set; }
+        public virtual int PassengerId { get; private set; }
         public Flight Flight { get; set; }
         public int FlightId { get; set; }
         public string SeatNumber { get; set; }
         public FlightClass FlightClass { get; set; }
-        public IReadOnlyList<Baggage> Baggages => _baggages;
+        public IReadOnlyCollection<Baggage> Baggages => _baggages;
 
         public void AddBaggage(Booking booking, Baggage baggage)
         {
@@ -50,7 +50,7 @@ namespace FlightBooking.models
             }
             else
             {
-                throw new Exception("No baggage and/or booking was added");
+                throw new NullReferenceException();
             }
         }
     }
