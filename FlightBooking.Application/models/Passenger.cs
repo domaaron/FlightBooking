@@ -29,7 +29,6 @@ namespace FlightBooking.models
         protected Passenger() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        private readonly List<Booking> _bookings = new();
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -38,7 +37,8 @@ namespace FlightBooking.models
         public Address Address { get; set; }
         public string Tel { get; set; }
         public string Email { get; set; }
-        public IReadOnlyList<Booking> Bookings => _bookings;
+        protected List<Booking> _bookings = new();
+        public virtual IReadOnlyCollection<Booking> Bookings => _bookings;
 
         public void PlaceBooking(Booking b)
         {
@@ -48,7 +48,19 @@ namespace FlightBooking.models
             }
             else
             {
-                throw new Exception("No booking was placed");
+                throw new NullReferenceException();
+            }
+        }
+
+        public void CancelBooking(Booking b)
+        {
+            if (b != null)
+            {
+                _bookings.Remove(b);
+            }
+            else
+            {
+                throw new NullReferenceException();
             }
         }
     }
