@@ -55,5 +55,10 @@ namespace FlightBooking.models
                 throw new NullReferenceException();
             }
         }
+
+        public int CountBaggages()
+        {
+            return _baggages.Count;
+        }
     }
 }
