@@ -44,7 +44,7 @@ namespace FlightBooking.models
         {
             if (b != null)
             {
-                if (b.DateOfBooking < b.Flight.ArrivalTime)
+                if (b.DateOfBooking < b.Flight.ArrivalTime && b.Flight.Status != "Canceled")
                 {
                     _bookings.Add(b);
                 }
@@ -69,6 +69,11 @@ namespace FlightBooking.models
             {
                 throw new NullReferenceException();
             }
+        }
+
+        public int CountBookings()
+        {
+            return _bookings.Count;
         }
     }
 }
