@@ -44,7 +44,14 @@ namespace FlightBooking.models
         {
             if (b != null)
             {
-                _bookings.Add(b);
+                if (b.DateOfBooking < b.Flight.ArrivalTime)
+                {
+                    _bookings.Add(b);
+                }
+                else
+                {
+                    throw new Exception("Booking of the selected flight is not possible anymore");
+                }
             }
             else
             {
