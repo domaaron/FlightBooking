@@ -20,6 +20,7 @@ namespace FlightBooking.models
             FlightId = flight.Id;
             SeatNumber = seatNumber;
             FlightClass = flightClass;
+            DateOfBooking = DateTime.Now;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -33,6 +34,7 @@ namespace FlightBooking.models
         public int FlightId { get; set; }
         public string SeatNumber { get; set; }
         public FlightClass FlightClass { get; set; }
+        public DateTime DateOfBooking { get; }
         public IReadOnlyCollection<Baggage> Baggages => _baggages;
 
         public void AddBaggage(Booking booking, Baggage baggage)
