@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -29,13 +30,17 @@ namespace FlightBooking.models
         protected Passenger() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        public int Id { get; set; }
+        public int Id { get; private set; }
+        [MaxLength(64)]
         public string FirstName { get; set; }
+        [MaxLength(64)]
         public string LastName { get; set; }
+        [MaxLength(10)]
         public string SSN { get; set; }
         public DateTime BirthDate { get; set; }
         public Address Address { get; set; }
         public string Tel { get; set; }
+        [MaxLength(64)]
         public string Email { get; set; }
         protected List<Booking> _bookings = new();
         public virtual IReadOnlyCollection<Booking> Bookings => _bookings;
@@ -44,7 +49,7 @@ namespace FlightBooking.models
         {
             if (b != null)
             {
-                if (b.DateOfBooking < b.Flight.ArrivalTime && b.Flight.Status != "Canceled")
+                if (b.DateOfBooking < b.Flight.ArrivalTime)
                 {
                     _bookings.Add(b);
                 }
