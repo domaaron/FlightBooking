@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace FlightBooking.models
 {
-    [Table("Payment")]
-    public class Payment
+    public class Payment : Booking
     {
-        public Payment(Booking booking, DateTime paymentDate)
+        public Payment(Booking booking, DateTime paymentDate) 
+            : base(booking.Passenger, booking.Flight, booking.SeatNumber, booking.FlightClass)
         {
-            Booking = booking;
-            BookingId = booking.Id;
             PaymentDate = paymentDate;
         }
 
@@ -21,9 +19,6 @@ namespace FlightBooking.models
         protected Payment() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        public int Id { get; private set; }
-        public Booking Booking { get; set; }
-        public int BookingId { get; set; }
         public DateTime PaymentDate { get; set; }
         public double CalculateTotalPrice(Booking booking)
         {
