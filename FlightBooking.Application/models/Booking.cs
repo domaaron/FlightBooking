@@ -14,7 +14,6 @@ namespace FlightBooking.models
     public class Booking
     {
         private FlightClass _class;
-        private readonly List<Baggage> _baggages = new();
         public Booking(Passenger passenger, Flight flight, string seatNumber, FlightClass flightClass)
         {
             Passenger = default!;
@@ -41,7 +40,8 @@ namespace FlightBooking.models
         public FlightClass FlightClass { get; set; }
         public DateTime DateOfBooking { get; }
         public string PaymentMethod { get; private set; } = default!;
-        public IReadOnlyCollection<Baggage> Baggages => _baggages;
+        protected List<Baggage> _baggages = new();
+        public virtual IReadOnlyCollection<Baggage> Baggages => _baggages;
 
         public void AddBaggage(Booking booking, Baggage baggage)
         {
