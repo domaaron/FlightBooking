@@ -21,7 +21,7 @@ namespace FlightBooking.Test
             var destinationTime = new DateTime(2023, 2, 1, 15, 0, 0);
 
             var airline = new Airline("Austrian Airlines");
-            var p1 = new Passenger("Max", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "max.mustermann@email.com");
+            var p1 = new Passenger(new Person("Max", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "max.mustermann@email.com"));
             var producer1 = new Producer("Boeing");
             var plane1 = new Airplane("Boeing 777", producer1, 200, 23.0);
             var f1 = new Flight(departureTime, arrivalTime, destinationTime, plane1, airline, new Address("Austria", "Vienna"), new Address("Ireland", "Dublin"), 250.0M, true);
@@ -40,7 +40,7 @@ namespace FlightBooking.Test
             var destinationTime = new DateTime(2023, 2, 1, 15, 0, 0);
 
             var airline = new Airline("Austrian Airlines");
-            var p2 = new AirlineEmployee(new Passenger("Erika", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "erika.mustermann@email.com"), airline, "Pilotin");
+            var p2 = new Passenger(new Person("Erika", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "erika.mustermann@email.com"));
             var producer1 = new Producer("Boeing");
             var plane1 = new Airplane("Boeing 777", producer1, 200, 23.0);
             var f2 = new Flight(departureTime, arrivalTime, destinationTime, plane1, airline, new Address("Austria", "Vienna"), new Address("Finland", "Helsinki"), 400M, false);
@@ -59,7 +59,7 @@ namespace FlightBooking.Test
             var destinationTime = new DateTime(2023, 2, 1, 15, 0, 0);
 
             var airline = new Airline("Austrian Airlines");
-            var p1 = new Passenger("Max", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "max.mustermann@email.com");
+            var p1 = new Passenger(new Person("Max", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "max.mustermann@email.com"));
             var producer1 = new Producer("Boeing");
             var plane1 = new Airplane("Boeing 777", producer1, 200, 23.0);
             var f1 = new Flight(departureTime, arrivalTime, destinationTime, plane1, airline,new Address("Austria", "Vienna"), new Address("Ireland", "Dublin"), 250.0M, true);

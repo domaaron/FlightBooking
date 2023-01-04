@@ -1,16 +1,17 @@
 ﻿using FlightBooking.models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FlightBooking.Application.models
 {
-    public class AirlineEmployee : Passenger
+    public class AirlineEmployee : Person
     {
-        public AirlineEmployee(Passenger passenger, Airline airline, string position)
-            : base (passenger.FirstName, passenger.LastName, passenger.SSN, passenger.BirthDate, passenger.Address, passenger.Tel, passenger.Email)
+        public AirlineEmployee(Person p, Airline airline, string position)
+            : base (p.FirstName, p.LastName, p.SSN, p.BirthDate, p.Address, p.Tel, p.Email)
         {
             Position = position;
         }

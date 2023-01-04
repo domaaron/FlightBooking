@@ -51,7 +51,7 @@ namespace FlightBooking.Test
 
             var airline = new Airline("Austrian Airlines");
 
-            var p1 = new Passenger("Max", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "max.mustermann@email.com");
+            var p1 = new Passenger(new Person("Max", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "max.mustermann@email.com"));
             var producer1 = new Producer("Boeing");
             var plane1 = new Airplane("Boeing 777", producer1, 200, 23.0);
             var f1 = new Flight(departureTime, arrivalTime, destinationTime ,plane1, airline, new Address("Austria", "Vienna"), new Address("Ireland", "Dublin"), 250.0M, true);
@@ -63,7 +63,7 @@ namespace FlightBooking.Test
             var b2 = new ConfirmedBooking(b1, DateTime.Now, "PayPal");
 
             Assert.True(b1.CountBaggages() == 2);
-            //Assert.True(b2.CalculateTotalPrice() == 250M);
+            //Assert.True(b2.CalculateTotalPrice(b2) == 250M);
         }
     }
 }

@@ -19,11 +19,12 @@ public class BookingContext : DbContext
     public DbSet<ConfirmedBooking> ConfirmedBookings => Set<ConfirmedBooking>();
     public DbSet<Flight> Flights => Set<Flight>();
     public DbSet<Passenger> Passengers => Set<Passenger>();
+    public DbSet<models.Person> Persons => Set<models.Person>();
     public DbSet<Producer> Producers => Set<Producer>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Passenger>().OwnsOne(p => p.Address);
+        modelBuilder.Entity<models.Person>().OwnsOne(p => p.Address);
         modelBuilder.Entity<Flight>().OwnsOne(f1 => f1.ArrivalAddress);
         modelBuilder.Entity<Flight>().OwnsOne(f2 => f2.DepartureAddress);
 
@@ -31,6 +32,6 @@ public class BookingContext : DbContext
         modelBuilder.Entity<Booking>().Property(b => b.Guid).ValueGeneratedOnAdd();
 
         modelBuilder.Entity<Booking>().HasDiscriminator(b => b.BookingType);
-        modelBuilder.Entity<Passenger>().HasDiscriminator(p => p.PassengerType);
+        modelBuilder.Entity<models.Person>().HasDiscriminator(p => p.PersonType);
     }
 }
