@@ -7,31 +7,34 @@ using System.Threading.Tasks;
 
 namespace FlightBooking.models
 {
-    public class Payment : Booking
+    public class ConfirmedBooking : Booking
     {
-        public Payment(Booking booking, DateTime paymentDate) 
-            : base(booking.Passenger, booking.Flight, booking.SeatNumber, booking.FlightClass)
+        public ConfirmedBooking(Booking booking, DateTime paymentDate, string paymentMethod) 
+            : base(booking.Flight, booking.SeatNumber, booking.FlightClass)
         {
+            PaymentMethod = paymentMethod;
             PaymentDate = paymentDate;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        protected Payment() { }
+        protected ConfirmedBooking() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public DateTime PaymentDate { get; set; }
-        public double CalculateTotalPrice(Booking booking)
+        public string PaymentMethod { get; set; }
+        
+        public decimal CalculateTotalPrice(Booking booking)
         {
             if (booking != null)
             {
-                double flightPrice = booking.Flight.Price;
-                double baggagePrice = 0;
+                decimal flightPrice = booking.Flight.Price;
+                decimal baggagePrice = 0;
 
                 foreach (Baggage b in booking.Baggages)
                 {
                     baggagePrice += b.Price;
                 }
-
+                
                 return flightPrice + baggagePrice;
             }
             else
@@ -39,5 +42,6 @@ namespace FlightBooking.models
                 throw new NullReferenceException();
             }
         }
+
     }
 }

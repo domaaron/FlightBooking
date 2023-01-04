@@ -8,16 +8,15 @@ using System.Threading.Tasks;
 
 namespace FlightBooking.models
 {
-    public enum FlightClass { Economy, Business, First};
+    public enum FlightClass { Economy, PremiumEconomy, Business, First};
 
     [Table("Booking")]
     public class Booking
     {
         private FlightClass _class;
-        public Booking(Passenger passenger, Flight flight, string seatNumber, FlightClass flightClass)
+        public Booking(Flight flight, string seatNumber, FlightClass flightClass)
         {
             Passenger = default!;
-            PassengerId = passenger.Id;
             Flight = flight;
             FlightId = flight.Id;
             SeatNumber = seatNumber;
@@ -32,22 +31,22 @@ namespace FlightBooking.models
 
         public int Id { get; private set; }
         public Guid Guid { get; private set; }
-        public Passenger Passenger { get; set; }
-        public virtual int PassengerId { get; private set; }
+        public int PassengerId { get; private set; }
+        public virtual Passenger Passenger { get; private set; }
         public Flight Flight { get; set; }
         public int FlightId { get; set; }
         public string SeatNumber { get; set; }
         public FlightClass FlightClass { get; set; }
         public DateTime DateOfBooking { get; }
-        public string PaymentMethod { get; private set; } = default!;
+        public string BookingType { get; private set; } = default!;
         protected List<Baggage> _baggages = new();
         public virtual IReadOnlyCollection<Baggage> Baggages => _baggages;
 
-        public void AddBaggage(Booking booking, Baggage baggage)
+        public void AddBaggage( Baggage baggage)
         {
-            if (booking != null && baggage != null)
+            if (baggage != null)
             {
-                if (baggage.Weight > 0 && baggage.Weight <= booking.Flight.Airplane.MaxBaggageWeight)
+                if (baggage.Weight > 0 && baggage.Weight <= this.Flight.Airplane.MaxBaggageWeight)
                 {
                     _baggages.Add(baggage);
                 }

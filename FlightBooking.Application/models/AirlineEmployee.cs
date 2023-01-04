@@ -7,22 +7,18 @@ using System.Threading.Tasks;
 
 namespace FlightBooking.Application.models
 {
-    public class FlightStatus : Flight
+    public class AirlineEmployee : Passenger
     {
-        public FlightStatus(Flight flight, string status) 
-            :base(flight.DepartureTime, flight.ArrivalTime, flight.DestinationTime, flight.Airplane, flight.DepartureAddress, flight.ArrivalAddress, flight.Price)
+        public AirlineEmployee(Passenger passenger, Airline airline, string position)
+            : base (passenger.FirstName, passenger.LastName, passenger.SSN, passenger.BirthDate, passenger.Address, passenger.Tel, passenger.Email)
         {
-            Status = status;
+            Position = position;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        protected FlightStatus() { }
+        protected AirlineEmployee() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        public string Status { get; set; }
-        public void ChangeStatus(string status)
-        {
-            Status = status;
-        }
+        public string Position { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace FlightBooking.models
     [Table("Baggage")]
     public class Baggage
     {
-        public Baggage(string name, double weight, double price)
+        public Baggage(string name, double weight, decimal price)
         {
             Name = name;
             Weight = weight;
@@ -24,6 +24,6 @@ namespace FlightBooking.models
         public int Id { get; private set; }
         public string Name { get; set; }
         public double Weight { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
     }
 }

@@ -44,14 +44,15 @@ namespace FlightBooking.models
         public string Email { get; set; }
         protected List<Booking> _bookings = new();
         public virtual IReadOnlyCollection<Booking> Bookings => _bookings;
-
+        public string PassengerType { get; private set; } = default!;
         public void PlaceBooking(Booking b)
         {
             if (b != null)
             {
                 if (b.DateOfBooking < b.Flight.ArrivalTime)
                 {
-                    _bookings.Add(b);
+                    if (b.Flight.IsActive == true)
+                        _bookings.Add(b);
                 }
                 else
                 {
