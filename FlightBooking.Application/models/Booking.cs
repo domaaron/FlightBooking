@@ -25,6 +25,15 @@ namespace FlightBooking.models
             Guid = Guid.NewGuid();
         }
 
+        protected Booking(Booking booking) 
+        {
+            Id = booking.Id;
+            Flight = booking.Flight;
+            FlightId = booking.FlightId;
+            SeatNumber = booking.SeatNumber;
+            FlightClass = booking.FlightClass;
+        }
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         protected Booking() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
