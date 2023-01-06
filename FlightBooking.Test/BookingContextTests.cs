@@ -11,6 +11,7 @@ namespace FlightBooking.Test
         {
             var db = new BookingContext(new DbContextOptionsBuilder()
                 .UseSqlite("Data Source = FlightBooking.db")
+                .UseLazyLoadingProxies()
                 .Options);
             if (deleteDb)
             {
