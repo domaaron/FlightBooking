@@ -42,7 +42,7 @@ namespace FlightBooking.models
         public Guid Guid { get; private set; }
         public int PassengerId { get; private set; }
         public virtual Passenger Passenger { get; private set; }
-        public Flight Flight { get; set; }
+        public virtual Flight Flight { get; set; }
         public int FlightId { get; set; }
         public string SeatNumber { get; set; }
         public FlightClass FlightClass { get; set; }

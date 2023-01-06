@@ -34,9 +34,9 @@ namespace FlightBooking.models
         public DateTime DepartureTime { get; set; }
         public DateTime ArrivalTime { get; set; }
         public DateTime DestinationTime { get; set; }
-        public Airplane Airplane { get; set; }
+        public virtual Airplane Airplane { get; set; }
         public int AirplaneId { get; set; }
-        public Airline Airline { get; set; }
+        public virtual Airline Airline { get; set; }
         public string AirlineId { get; set; }
         public Address DepartureAddress { get; set; }
         public Address ArrivalAddress { get; set; }

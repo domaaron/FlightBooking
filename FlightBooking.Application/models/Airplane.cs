@@ -25,7 +25,7 @@ namespace FlightBooking.models
 
         public int Id { get; private set; }
         public string Name { get; set; }
-        public Producer Producer { get; set; }
+        public virtual Producer Producer { get; set; }
         public string ProducerId { get; set; }
         public int Seats { get; set; }
         public double MaxBaggageWeight { get; set; }    //Allowed max weight for each individual baggage
