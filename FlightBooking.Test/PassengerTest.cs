@@ -127,7 +127,7 @@ namespace FlightBooking.Test
 
             Assert.True(_db.Passengers.ToList().First().CountBookings() == 0);
         }
-        /*
+        
         [Fact]
         public void ConfirmBookingSuccessTest()
         {
@@ -136,6 +136,6 @@ namespace FlightBooking.Test
 
             Assert.True(ps1.Bookings.OfType<ConfirmedBooking>().Count() == 1);
         }
-        */
+        
     }
 }
