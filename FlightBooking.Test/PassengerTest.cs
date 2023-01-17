@@ -1,73 +1,140 @@
-﻿using Castle.Core.Resource;
-using FlightBooking.Application.models;
+﻿using FlightBooking.Application.models;
 using FlightBooking.models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlightBooking.Test
 {
-    public class PassengerTest
+    public class PassengerTest : DatabaseTest
     {
-        [Fact]
-        public void AddActiveBooking()
+        public PassengerTest()
         {
-            var date1 = new DateTime(2000, 1, 1);
-            var arrivalTime = new DateTime(2023, 2, 1, 8, 30, 50);
-            var departureTime = new DateTime(2023, 2, 1, 10, 30, 50);
-            var destinationTime = new DateTime(2023, 2, 1, 15, 0, 0);
+            _db.Database.EnsureCreated();
 
-            var airline = new Airline("Austrian Airlines");
-            var p1 = new Passenger(new Person("Max", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "max.mustermann@email.com"));
-            var producer1 = new Producer("Boeing");
-            var plane1 = new Airplane("Boeing 777", producer1, 200, 23.0);
-            var f1 = new Flight(departureTime, arrivalTime, destinationTime, plane1, airline, new Address("Austria", "Vienna"), new Address("Ireland", "Dublin"), 250.0M, true);
-            var b1 = new Booking(f1, "C86", FlightClass.First);
-            p1.PlaceBooking(b1);
+            //Passenger
+            var ps1 = new Passenger(new Person(firstName: "Max",
+                                               lastName: "Mustermann",
+                                               ssn: 123456789,
+                                               birthDate: new DateTime(1990, 1, 1),
+                                               address: new Address(State: "Austria", City: "Vienna"),
+                                               tel: "123456789",
+                                               email: "max.mustermann@mail.com"));
 
-            Assert.True(p1.CountBookings() == 1);
+            var ps2 = new Passenger(new Person(firstName: "Erika",
+                                              lastName: "Mustermann",
+                                              ssn: 123456789,
+                                              birthDate: new DateTime(1990, 1, 1),
+                                              address: new Address(State: "Austria", City: "Vienna"),
+                                              tel: "123456789",
+                                              email: "erika.mustermann@mail.com"));
+            _db.Persons.Add(ps1);
+            _db.Persons.Add(ps2);
+
+            //Producer
+            var prd1 = new Producer(name: "Boeing");
+            var prd2 = new Producer(name: "Airbus");
+            
+            _db.Producers.Add(prd1);
+            _db.Producers.Add(prd2);
+
+            //Airplane
+            var airp1 = new Airplane(name: "Boeing 777",
+                                    producer: prd1, 
+                                    seats: 400,
+                                    maxBaggageWeight: 30);
+
+            var airp2 = new Airplane(name: "Airbus A380",
+                                    producer: prd2,
+                                    seats: 520,
+                                    maxBaggageWeight: 50); 
+
+            _db.Airplanes.Add(airp1);
+            _db.Airplanes.Add(airp2);
+
+            //Airline
+            var airl1 = new Airline(name: "Austria Airlines");
+            var airl2 = new Airline("Emirates Airline");
+
+            _db.Airlines.Add(airl1);
+            _db.Airlines.Add(airl2);
+
+            //Flight
+            var f1 = new Flight(departureTime: new DateTime(2023, 12, 31),
+                                arrivalTime: new DateTime(2023, 12, 31),
+                                destinationTime: new DateTime(2024, 1, 1),
+                                airplane: airp1,
+                                airline: airl1,
+                                departureAddress: new Address("Austria", "Vienna"),
+                                arrivalAddress: new Address("Finland", "Helsinki"),
+                                isActive: true);
+
+            var f2 = new Flight(departureTime: new DateTime(2024, 12, 31),
+                                arrivalTime: new DateTime(2024, 12, 31),
+                                destinationTime: new DateTime(2025, 1, 1),
+                                airplane: airp2,
+                                airline: airl2,
+                                departureAddress: new Address("Austria", "Vienna"),
+                                arrivalAddress: new Address("Spain", "Madrid"),
+                                isActive: false);
+
+            _db.Flights.Add(f1);
+            _db.Flights.Add(f2);
+            _db.SaveChanges();
+
+            //Booking
+            var b1 = new Booking(flight: f1,
+                                 seatNumber: "CS8",
+                                 FlightClass.Economy,
+                                 price: 50);
+
+            var b2 = new Booking(flight: f2,
+                                 seatNumber: "B08",
+                                 FlightClass.Business,
+                                 price: 40);
+
+            //PlaceBooking
+            ps1.PlaceBooking(b1);
+            ps2.PlaceBooking(b2);
+
+            _db.SaveChanges();
         }
 
         [Fact]
-        public void AddCanceledBooking()
+        public void SetDataSuccessTest()
         {
-            var date1 = new DateTime(2000, 1, 1);
-            var arrivalTime = new DateTime(2023, 2, 1, 8, 30, 50);
-            var departureTime = new DateTime(2023, 2, 1, 10, 30, 50);
-            var destinationTime = new DateTime(2023, 2, 1, 15, 0, 0);
-
-            var airline = new Airline("Austrian Airlines");
-            var p2 = new Passenger(new Person("Erika", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "erika.mustermann@email.com"));
-            var producer1 = new Producer("Boeing");
-            var plane1 = new Airplane("Boeing 777", producer1, 200, 23.0);
-            var f2 = new Flight(departureTime, arrivalTime, destinationTime, plane1, airline, new Address("Austria", "Vienna"), new Address("Finland", "Helsinki"), 400M, false);
-            var b2 = new Booking(f2, "B04", FlightClass.Business);
-            p2.PlaceBooking(b2);
-
-            Assert.True(p2.CountBookings() == 0);
+            Assert.True(_db.Persons.Count() == 2);
+            Assert.True(_db.Producers.Count() == 2);
+            Assert.True(_db.Airplanes.Count() == 2);
+            Assert.True(_db.Airlines.Count() == 2);
+            Assert.True(_db.Flights.Count() == 2);
+        }
+        
+        [Fact]
+        public void AddActiveFlight()
+        {
+            Assert.True(_db.Passengers.ToList().First().CountBookings() == 1);
         }
 
         [Fact]
-        public void CancelBooking()
+        public void AddCanceledFlight()
         {
-            var date1 = new DateTime(2000, 1, 1);
-            var arrivalTime = new DateTime(2023, 2, 1, 8, 30, 50);
-            var departureTime = new DateTime(2023, 2, 1, 10, 30, 50);
-            var destinationTime = new DateTime(2023, 2, 1, 15, 0, 0);
+            Assert.True(_db.Passengers.ToList().Last().CountBookings() == 0);
+        }
 
-            var airline = new Airline("Austrian Airlines");
-            var p1 = new Passenger(new Person("Max", "Mustermann", "1234567890", date1, new Address("Austria", "Vienna"), "1234567890", "max.mustermann@email.com"));
-            var producer1 = new Producer("Boeing");
-            var plane1 = new Airplane("Boeing 777", producer1, 200, 23.0);
-            var f1 = new Flight(departureTime, arrivalTime, destinationTime, plane1, airline,new Address("Austria", "Vienna"), new Address("Ireland", "Dublin"), 250.0M, true);
-            var b1 = new Booking(f1, "C86", FlightClass.First);
-            p1.PlaceBooking(b1);
-            p1.CancelBooking(b1);
+        [Fact]
+        public void CancelFlightSuccessTest()
+        {
+            var ps1 = _db.Passengers.First();
+            ps1.CancelBooking(_db.Passengers.ToList().First().Bookings.First());
 
-            Assert.True(p1.CountBookings() == 0);
+            Assert.True(_db.Passengers.ToList().First().CountBookings() == 0);
+        }
+
+        [Fact]
+        public void ConfirmBookingSuccessTest()
+        {
+            var ps1 = _db.Passengers.First();
+            ps1.ConfirmBooking(ps1.Bookings.First(), DateTime.Now, "Mastercard");
+
+            Assert.True(ps1.Bookings.OfType<ConfirmedBooking>().Count() == 1);
         }
     }
 }

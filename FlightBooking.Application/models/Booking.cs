@@ -14,7 +14,7 @@ namespace FlightBooking.models
     public class Booking
     {
         private FlightClass _class;
-        public Booking(Flight flight, string seatNumber, FlightClass flightClass)
+        public Booking(Flight flight, string seatNumber, FlightClass flightClass, decimal price)
         {
             Passenger = default!;
             Flight = flight;
@@ -22,16 +22,20 @@ namespace FlightBooking.models
             SeatNumber = seatNumber;
             this._class = flightClass;
             DateOfBooking = DateTime.Now;
+            price = Price;
             Guid = Guid.NewGuid();
         }
 
         protected Booking(Booking booking) 
         {
             Id = booking.Id;
+            Passenger = booking.Passenger;
+            PassengerId = booking.PassengerId;
             Flight = booking.Flight;
             FlightId = booking.FlightId;
             SeatNumber = booking.SeatNumber;
             FlightClass = booking.FlightClass;
+            Price = booking.Price;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -47,11 +51,12 @@ namespace FlightBooking.models
         public string SeatNumber { get; set; }
         public FlightClass FlightClass { get; set; }
         public DateTime DateOfBooking { get; }
+        public decimal Price { get; set; }
         public string BookingType { get; private set; } = default!;
         protected List<Baggage> _baggages = new();
         public virtual IReadOnlyCollection<Baggage> Baggages => _baggages;
 
-        public void AddBaggage( Baggage baggage)
+        public void AddBaggage(Baggage baggage)
         {
             if (baggage != null)
             {

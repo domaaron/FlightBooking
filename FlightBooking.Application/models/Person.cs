@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bogus.DataSets;
 
 namespace FlightBooking.Application.models
 {
@@ -12,7 +13,7 @@ namespace FlightBooking.Application.models
     [Table("Person")]
     public class Person
     {
-        public Person(string firstName, string lastName, string ssn, DateTime birthDate, Address address, string tel, string email)
+        public Person(string firstName, string lastName, int ssn, DateTime birthDate, Address address, string tel, string email)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -32,8 +33,7 @@ namespace FlightBooking.Application.models
         public string FirstName { get; set; }
         [MaxLength(64)]
         public string LastName { get; set; }
-        [MaxLength(10)]
-        public string SSN { get; set; }
+        public int SSN { get; set; }
         public DateTime BirthDate { get; set; }
         public Address Address { get; set; }
         public string Tel { get; set; }

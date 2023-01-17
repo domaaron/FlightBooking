@@ -11,7 +11,7 @@ namespace FlightBooking.models
     [Table("Flight")]
     public class Flight
     {
-        public Flight(DateTime departureTime, DateTime arrivalTime, DateTime destinationTime, Airplane airplane, Airline airline, Address departureAddress, Address arrivalAddress, decimal price, bool isActive)
+        public Flight(DateTime departureTime, DateTime arrivalTime, DateTime destinationTime, Airplane airplane, Airline airline, Address departureAddress, Address arrivalAddress, bool isActive)
         {
             DepartureTime = departureTime;
             ArrivalTime = arrivalTime;
@@ -22,7 +22,6 @@ namespace FlightBooking.models
             AirlineId = airline.Name;
             DepartureAddress = departureAddress;
             ArrivalAddress = arrivalAddress;
-            Price = price;
             IsActive = isActive;
         }
 
@@ -40,7 +39,6 @@ namespace FlightBooking.models
         public string AirlineId { get; set; }
         public Address DepartureAddress { get; set; }
         public Address ArrivalAddress { get; set; }
-        public decimal Price { get; set; }
         public bool IsActive { get; set; }
         public void ChangeStatus(bool isActive)
         {

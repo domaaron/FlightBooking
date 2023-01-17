@@ -10,7 +10,7 @@ namespace FlightBooking.models
     public class ConfirmedBooking : Booking
     {
         public ConfirmedBooking(Booking booking, DateTime paymentDate, string paymentMethod) 
-            : base(booking.Flight, booking.SeatNumber, booking.FlightClass)
+            : base(booking.Flight, booking.SeatNumber, booking.FlightClass, booking.Price)
         {
             PaymentMethod = paymentMethod;
             PaymentDate = paymentDate;
@@ -22,9 +22,11 @@ namespace FlightBooking.models
 
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; }
-        
-        public decimal CalculateTotalPrice(Booking booking)
+
+        public decimal CalculateTotalPrice() => _baggages.Sum(b => b.Price) + Price;
+        /*
         {
+            
             if (booking != null)
             {
                 decimal flightPrice = booking.Flight.Price;
@@ -40,8 +42,8 @@ namespace FlightBooking.models
             else
             {
                 throw new NullReferenceException();
-            }
+            }   
         }
-
+        */
     }
 }

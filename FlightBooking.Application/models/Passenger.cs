@@ -57,5 +57,17 @@ namespace FlightBooking.models
         {
             return _bookings.Count;
         }
+
+        public void ConfirmBooking(Booking b, DateTime paymentDate, string paymentMethod)
+        {
+            if (b is ConfirmedBooking)
+            {
+                return;
+            }
+
+            var confirmedBooking = new ConfirmedBooking(b, paymentDate, paymentMethod);
+            _bookings.Remove(b);
+            _bookings.Add(confirmedBooking);
+        }
     }
 }

@@ -1,6 +1,6 @@
 using FlightBooking.models;
-using FlightBooking.Application.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using FlightBooking.Application.infrastructure;
 
 namespace FlightBooking.Test
 {
@@ -31,6 +31,7 @@ namespace FlightBooking.Test
         public void SeedDatabaseTest()
         {
             using var db = GetDatabase(deleteDb: true);
+            db.Seed();
         }
     }
 }
