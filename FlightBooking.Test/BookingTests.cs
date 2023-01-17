@@ -90,7 +90,13 @@ namespace FlightBooking.Test
         {
             Assert.True(_db.Bookings.ToList().First().CountBaggages() == 2);
         }
-
-        
+        /*
+        [Fact]
+        public void CalculateTotalPriceSuccessTest()
+        {
+            //Assert.True(_db.Passengers.First().Bookings.OfType<ConfirmedBooking>().Count() == 1);
+            Assert.Equal(0, _db.Passengers.First().Bookings.First().Price);
+        }
+        */
     }
 }

@@ -13,6 +13,8 @@ namespace FlightBooking.Application.models
         public AirlineEmployee(Person p, Airline airline, string position)
             : base (p.FirstName, p.LastName, p.SSN, p.BirthDate, p.Address, p.Tel, p.Email)
         {
+            Airline = airline;
+            AirlineId = airline.Name;
             Position = position;
         }
 
@@ -20,6 +22,8 @@ namespace FlightBooking.Application.models
         protected AirlineEmployee() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
+        public virtual Airline Airline { get; set; }
+        public string AirlineId { get; set; } 
         public string Position { get; set; }
     }
 }

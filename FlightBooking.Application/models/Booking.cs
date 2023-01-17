@@ -22,7 +22,7 @@ namespace FlightBooking.models
             SeatNumber = seatNumber;
             this._class = flightClass;
             DateOfBooking = DateTime.Now;
-            price = Price;
+            Price = price;
             Guid = Guid.NewGuid();
         }
 
