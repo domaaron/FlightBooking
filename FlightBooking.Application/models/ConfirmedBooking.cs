@@ -10,7 +10,7 @@ namespace FlightBooking.models
     public class ConfirmedBooking : Booking
     {
         public ConfirmedBooking(Booking booking, DateTime paymentDate, string paymentMethod) 
-            : base(booking.Flight, booking.SeatNumber, booking.FlightClass, booking.Price)
+            : base(booking)
         {
             PaymentMethod = paymentMethod;
             PaymentDate = paymentDate;
@@ -23,7 +23,7 @@ namespace FlightBooking.models
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; }
 
-        public decimal CalculateTotalPrice() => _baggages.Sum(b => b.Price) + Price;
+        public decimal CalculateTotalPrice() => Baggages.Sum(b => b.Price) + Price;
         /*
         {
             

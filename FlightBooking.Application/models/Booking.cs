@@ -66,7 +66,7 @@ namespace FlightBooking.models
                 }
                 else
                 {
-                    throw new Exception("Weight of baggage does not meet the requirements");
+                    throw new ArgumentException("Weight of baggage does not meet the requirements");
                 }
             }
             else

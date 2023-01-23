@@ -1,5 +1,4 @@
-﻿using Bogus;
-using FlightBooking.Application.models;
+﻿using FlightBooking.Application.models;
 using FlightBooking.models;
 using System;
 using System.Collections.Generic;
@@ -65,9 +64,6 @@ namespace FlightBooking.Test
                                  FlightClass.Economy,
                                  price: 50);
 
-            //PlaceBooking
-            ps1.PlaceBooking(b1);
-
             //Baggage
             var bag1 = new Baggage("Hardside luggage", 4.19, 28);
             var bag2 = new Baggage("Softside luggage", 3.91, 25);
@@ -75,14 +71,29 @@ namespace FlightBooking.Test
             _db.Baggages.Add(bag1);
             _db.Baggages.Add(bag2);
 
+            //ConfirmedBooking
+            var cb = new ConfirmedBooking(b1, DateTime.Now, "Mastercard");
+            
+            
             //AddBaggage
-            b1.AddBaggage(bag1);
-            b1.AddBaggage(bag2);
+            cb.AddBaggage(bag1);
+            cb.AddBaggage(bag2);
+            
+
+            //PlaceBooking
+            ps1.PlaceBooking(cb);
 
             _db.SaveChanges();
+        }
 
-            //ConfirmBooking
-            ps1.ConfirmBooking(b1, DateTime.Now, "Mastercard");
+        [Fact]
+        public void AddInvalidBaggage()
+        {
+            var b1 = _db.Bookings.First();
+            var bag1 = new Baggage("Bag filled with stones", 80, 0);
+
+            Action testAdd = () => b1.AddBaggage(bag1);
+            Assert.Throws<ArgumentException>(testAdd);
         }
 
         [Fact]
@@ -90,13 +101,12 @@ namespace FlightBooking.Test
         {
             Assert.True(_db.Bookings.ToList().First().CountBaggages() == 2);
         }
-        /*
+        
         [Fact]
         public void CalculateTotalPriceSuccessTest()
         {
-            //Assert.True(_db.Passengers.First().Bookings.OfType<ConfirmedBooking>().Count() == 1);
-            Assert.Equal(0, _db.Passengers.First().Bookings.First().Price);
+            Assert.Equal(103, _db.ConfirmedBookings.First().CalculateTotalPrice());
         }
-        */
+        
     }
 }
