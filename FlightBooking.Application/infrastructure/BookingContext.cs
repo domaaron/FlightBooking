@@ -56,17 +56,17 @@ public class BookingContext : DbContext
         Airplanes.AddRange(airplane);
         SaveChanges();
 
-        var person = new Faker<models.Person>("de").CustomInstantiator(p => new models.Person(
+        var passenger = new Faker<Passenger>("de").CustomInstantiator(p => new Passenger(new models.Person(
             firstName: p.Person.FirstName,
             lastName: p.Person.LastName,
             ssn: p.Random.Int(100000000, 999999999),
             birthDate: p.Person.DateOfBirth,
             address: new Address(p.Address.Country(), p.Address.City()),
             tel: p.Phone.PhoneNumber(),
-            email: p.Internet.Email()))
+            email: p.Internet.Email())))
             .Generate(10)
             .ToList();
-        Persons.AddRange(person);
+        Persons.AddRange(passenger);
         SaveChanges();
 
         var airline = new Faker<Airline>("de").CustomInstantiator(a => new Airline(
@@ -88,6 +88,21 @@ public class BookingContext : DbContext
             .Generate(10)
             .ToList();
         Flights.AddRange(flight);
+        SaveChanges();
+
+        var airlineEmployee = new Faker<AirlineEmployee>("de").CustomInstantiator(a => new AirlineEmployee(new models.Person(
+            firstName: a.Person.FirstName,
+            lastName: a.Person.LastName,
+            ssn: a.Random.Int(100000000, 999999999),
+            birthDate: a.Person.DateOfBirth,
+            address: new Address(a.Address.Country(), a.Address.City()),
+            tel: a.Phone.PhoneNumber(),
+            email: a.Internet.Email()),
+            airline: a.Random.ListItem(airline),
+            position: a.Commerce.Department()))
+            .Generate(10)
+            .ToList();
+        Persons.AddRange(airlineEmployee);
         SaveChanges();
     }
 }
