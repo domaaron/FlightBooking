@@ -99,7 +99,7 @@ public class BookingContext : DbContext
             tel: a.Phone.PhoneNumber(),
             email: a.Internet.Email()),
             airline: a.Random.ListItem(airline),
-            position: a.Commerce.Department()))
+            position: a.Name.JobTitle()))
             .Generate(10)
             .ToList();
         Persons.AddRange(airlineEmployee);
