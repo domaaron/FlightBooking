@@ -15,6 +15,7 @@ namespace FlightBooking.Application.models
     {
         public Person(string firstName, string lastName, int ssn, DateTime birthDate, Address address, string tel, string email)
         {
+            Guid = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
             SSN = ssn;
@@ -29,6 +30,7 @@ namespace FlightBooking.Application.models
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public int Id { get; private set; }
+        public Guid Guid { get; private set; }
         [MaxLength(64)]
         public string FirstName { get; set; }
         [MaxLength(64)]
