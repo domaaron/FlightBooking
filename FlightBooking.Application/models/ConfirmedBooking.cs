@@ -24,26 +24,5 @@ namespace FlightBooking.models
         public string PaymentMethod { get; set; }
 
         public decimal CalculateTotalPrice() => Baggages.Sum(b => b.Price) + Price;
-        /*
-        {
-            
-            if (booking != null)
-            {
-                decimal flightPrice = booking.Flight.Price;
-                decimal baggagePrice = 0;
-
-                foreach (Baggage b in booking.Baggages)
-                {
-                    baggagePrice += b.Price;
-                }
-                
-                return flightPrice + baggagePrice;
-            }
-            else
-            {
-                throw new NullReferenceException();
-            }   
-        }
-        */
     }
 }
