@@ -57,9 +57,9 @@ namespace FlightBooking.Test
             _db.Airlines.Add(airl2);
 
             //Flight
-            var f1 = new Flight(departureTime: new DateTime(2023, 12, 31),
-                                arrivalTime: new DateTime(2023, 12, 31),
-                                destinationTime: new DateTime(2024, 1, 1),
+            var f1 = new Flight(departureTime: new DateTime(2025, 12, 31),
+                                arrivalTime: new DateTime(2025, 12, 31),
+                                destinationTime: new DateTime(2025, 1, 1),
                                 airplane: airp1,
                                 airline: airl1,
                                 departureAddress: new Address("Austria", "Vienna"),
@@ -132,7 +132,10 @@ namespace FlightBooking.Test
         public void ConfirmBookingSuccessTest()
         {
             var ps1 = _db.Passengers.First();
-            ps1.ConfirmBooking(ps1.Bookings.First(), DateTime.Now, "Mastercard");
+            var booking = _db.Bookings.First(b => b.Passenger == ps1);
+            ps1.ConfirmBooking(booking, DateTime.Now, "Mastercard");
+
+            _db.SaveChanges();
 
             Assert.True(ps1.Bookings.OfType<ConfirmedBooking>().Count() == 1);
         }

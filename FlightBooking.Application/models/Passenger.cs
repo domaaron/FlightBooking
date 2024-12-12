@@ -66,6 +66,7 @@ namespace FlightBooking.models
             }
 
             var confirmedBooking = new ConfirmedBooking(b, paymentDate, paymentMethod);
+            
             _bookings.Remove(b);
             _bookings.Add(confirmedBooking);
         }

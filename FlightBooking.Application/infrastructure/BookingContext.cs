@@ -33,6 +33,16 @@ public class BookingContext : DbContext
 
         modelBuilder.Entity<Booking>().HasDiscriminator(b => b.BookingType);
         modelBuilder.Entity<models.Person>().HasDiscriminator(p => p.PersonType);
+
+
+        modelBuilder.Entity<Booking>().Property(b => b.FlightClass).HasConversion<string>();
+        modelBuilder.Entity<Booking>().Property(b => b.FlightClass).HasConversion<string>();
+
+        modelBuilder.Entity<Flight>().Property(f => f.IsActive)
+            .HasConversion(
+                v => v ? "Yes" : "No",
+                v => v == "Yes"
+            );
     }
 
     public void Seed()
@@ -50,7 +60,7 @@ public class BookingContext : DbContext
             name: a.Vehicle.Model(),
             producer: a.Random.ListItem(producer),
             seats: a.Random.Int(81, 853),
-            maxBaggageWeight: a.Random.Double(23, 50)))
+            maxBaggageWeight: Math.Round(a.Random.Double(23, 50), 0)))
             .Generate(10)
             .ToList();
         Airplanes.AddRange(airplane);
@@ -60,7 +70,7 @@ public class BookingContext : DbContext
             firstName: p.Person.FirstName,
             lastName: p.Person.LastName,
             ssn: p.Random.Int(100000000, 999999999),
-            birthDate: p.Person.DateOfBirth,
+            birthDate: p.Person.DateOfBirth.AddSeconds(p.Random.Int(0, 180 * 86_400)),
             address: new Address(p.Address.Country(), p.Address.City()),
             tel: p.Phone.PhoneNumber(),
             email: p.Internet.Email())))
@@ -77,9 +87,9 @@ public class BookingContext : DbContext
         SaveChanges();
 
         var flight = new Faker<Flight>("de").CustomInstantiator(f => new Flight(
-            departureTime: f.Person.DateOfBirth,
-            arrivalTime: f.Person.DateOfBirth,
-            destinationTime: f.Person.DateOfBirth,
+            departureTime: new DateTime(2025, 1, 1).AddSeconds(f.Random.Int(0, 180 * 86_400)),
+            arrivalTime: new DateTime(2025, 1, 1).AddSeconds(f.Random.Int(0, 180 * 86_400)),
+            destinationTime: new DateTime(2025, 1, 1).AddSeconds(f.Random.Int(0, 180 * 86_400)),
             airplane: f.Random.ListItem(airplane),
             airline: f.Random.ListItem(airline),
             departureAddress: new Address(f.Address.Country(), f.Address.City()),
@@ -94,7 +104,7 @@ public class BookingContext : DbContext
             firstName: a.Person.FirstName,
             lastName: a.Person.LastName,
             ssn: a.Random.Int(100000000, 999999999),
-            birthDate: a.Person.DateOfBirth,
+            birthDate: a.Person.DateOfBirth.AddSeconds(a.Random.Int(0, 180 * 86_400)),
             address: new Address(a.Address.Country(), a.Address.City()),
             tel: a.Phone.PhoneNumber(),
             email: a.Internet.Email()),
