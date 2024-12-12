@@ -17,7 +17,7 @@ namespace FlightBooking.Test
 
         public DatabaseTest()
         {
-            _connection = new SqliteConnection("DataSource=:memory:");
+            _connection = new SqliteConnection("DataSource=FlightBooking.db");
             _connection.Open();
             var opt = new DbContextOptionsBuilder()
                 .UseSqlite(_connection)  // Keep connection open (only needed with SQLite in memory db)
